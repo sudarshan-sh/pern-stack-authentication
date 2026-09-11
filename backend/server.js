@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.js";
@@ -7,15 +8,19 @@ dotenv.config(); // reads the key-value pairs from .env and inject the values in
 
 const app = express();
 
+// to allow cross origin requests
+app.use(
+  cors({
+    // allow only this origin (request from this URL would get allowed others -> rejected)
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    credentials: true,
+  }),
+);
 app.use(express.json()); // to parse json request body
 app.use(cookieParser()); // to parse cookies coming from the request headers
 
 // +++++register the routes with the application+++++
-app.use("/api", authRoutes);
-
-app.get("/", (req, res) => {
-  res.send("Hello World- This is PERN auth project!");
-});
+app.use("/api/auth", authRoutes);
 
 const PORT = process.env.PORT || 5000;
 
