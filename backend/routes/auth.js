@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcryptjs"; // for hashing/encrypting the password (for security reasons)
 import jwt from "jsonwebtoken";
 import pool from "../config/db.js"; // connection pool for write/read data to/from Postgres
+import { protect } from "../middleware/auth.js";
 
 const router = express.Router(); // create a router instance using express framework
 
@@ -91,7 +92,7 @@ router.post("/login", async (req, res) => {
 });
 
 // user info
-router.get("/me", async (req, res) => {
+router.get("/me", protect, async (req, res) => {
   res.json(req.user);
   // return info of the logged in user from protect middleware
 });
