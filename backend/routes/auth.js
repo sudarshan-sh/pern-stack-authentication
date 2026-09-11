@@ -6,7 +6,7 @@ import pool from "../config/db.js"; // connection pool for write/read data to/fr
 const router = express.Router(); // create a router instance using express framework
 
 const cookieOptions = {
-  httpOnly: true,
+  httpOnly: true, // avoid cookie access by JS and travel only from server to browser and vice-versa
   secure: process.env.NODE_ENV === "production",
   sameSite: "Strict", // to prevent CSRF attacks
   maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
