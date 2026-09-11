@@ -11,7 +11,7 @@ const app = express();
 // to allow cross origin requests
 app.use(
   cors({
-    // allow only this origin (request from this URL would get allowed others -> rejected)
+    // allow only this origin (request from this URL would get allowed, others -> rejected)
     origin: process.env.CLIENT_URL || "http://localhost:5173",
     credentials: true,
   }),
