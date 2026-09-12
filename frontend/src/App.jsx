@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import axios from "axios";
 import { AUTH_API } from "./config/api";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 axios.defaults.withCredentials = true;
 
@@ -19,6 +20,7 @@ function App() {
         const res = await axios.get(`${AUTH_API}/me`);
         setUser(res.data);
       } catch (error) {
+        console.error("Error fetching user:", error);
         setUser(null);
       } finally {
         setLoading(false);
@@ -35,7 +37,14 @@ function App() {
     <Router>
       <Navbar user={user} setUser={setUser} />
       <Routes>
-        <Route path="/" element={<Home user={user} />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute user={user}>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/login" element={<Login setUser={setUser} />} />
         <Route path="/register" element={<Signup setUser={setUser} />} />
       </Routes>
