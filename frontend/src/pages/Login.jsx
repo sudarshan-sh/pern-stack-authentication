@@ -59,6 +59,12 @@ const Login = ({ setUser }) => {
           value={form.password}
           onChange={handleChange}
         />
+        <p className="mb-4">
+          Don't have an account?{" "}
+          <a href="/register" className="text-blue-500">
+            Register
+          </a>
+        </p>
         <button
           type="submit"
           className="bg-blue-500 text-white p-2 rounded-md w-full hover:bg-blue-600 disabled:bg-gray-400"
