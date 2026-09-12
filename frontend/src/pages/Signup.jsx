@@ -3,8 +3,9 @@ import axios from "axios";
 import { AUTH_API } from "../config/api";
 import { Link, useNavigate } from "react-router-dom";
 
-const Login = ({ setUser }) => {
+const Signup = ({ setUser }) => {
   const [form, setForm] = React.useState({
+    name: "",
     email: "",
     password: "",
   });
@@ -21,11 +22,11 @@ const Login = ({ setUser }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${AUTH_API}/login`, form, {
+      const response = await axios.post(`${AUTH_API}/register`, form, {
         headers: { "Content-Type": "application/json" },
       });
       setUser(response.data.user);
-      alert("Login successful!");
+      alert("Registration successful!");
       navigate("/");
     } catch (error) {
       setError(
@@ -41,8 +42,16 @@ const Login = ({ setUser }) => {
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-md shadow-md w-full max-w-sm"
       >
-        <h2 className="text-2xl font-bold mb-4">Login</h2>
+        <h2 className="text-2xl font-bold mb-4">Signup</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
+        <input
+          type="text"
+          placeholder="Enter Name"
+          className="border border-gray-300 rounded-md p-2 mb-4 w-full"
+          name="name"
+          value={form.name}
+          onChange={handleChange}
+        />
         <input
           type="text"
           placeholder="Enter Email"
@@ -60,21 +69,21 @@ const Login = ({ setUser }) => {
           onChange={handleChange}
         />
         <p className="mb-4">
-          Don't have an account?{" "}
-          <Link to="/register" className="text-blue-500">
-            Register
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-500">
+            Login
           </Link>
         </p>
         <button
           type="submit"
           className="bg-blue-500 text-white p-2 rounded-md w-full hover:bg-blue-600 disabled:bg-gray-400"
-          disabled={!form.email || !form.password}
+          disabled={!form.email || !form.password || !form.name}
         >
-          Login
+          Submit
         </button>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default Signup;
