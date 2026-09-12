@@ -67,7 +67,9 @@ router.post("/login", async (req, res) => {
   ]);
 
   if (user.rows.length === 0) {
-    return res.status(400).json({ message: "No user found!" });
+    return res
+      .status(400)
+      .json({ message: "No user found, please register first!" });
   }
 
   const userData = user.rows[0];

@@ -30,7 +30,8 @@ const Signup = ({ setUser }) => {
       navigate("/");
     } catch (error) {
       setError(
-        error.response?.data?.message || "Login failed. Please try again.",
+        error.response?.data?.message ||
+          "Registration failed. Please try again.",
       );
     }
   };
